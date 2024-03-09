@@ -73,3 +73,10 @@ def user_detail(username):
     #user = find first match in db
     #img = get_b64_img(user.username) use their username for helper function
     return "user_detail"
+
+@movies.route("/account", methods=["GET", "POST"])
+def account():
+    return "account"
+
+
+
