@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user
 
 from .. import movie_client
-from ..forms import MovieReviewForm, SearchForm
+from ..forms import MovieReviewForm, SearchForm, RegistrationForm
 from ..models import User, Review
 from ..utils import current_time
 
@@ -48,7 +48,7 @@ def movie_detail(movie_id):
 
     form = MovieReviewForm()
     if form.validate_on_submit():
-        review = Review(
+        review = Review (
             commenter=current_user._get_current_object(),
             content=form.text.data,
             date=current_time(),
@@ -69,14 +69,12 @@ def movie_detail(movie_id):
 
 @movies.route("/user/<username>")
 def user_detail(username):
-    #uncomment to get review image
     #user = find first match in db
     #img = get_b64_img(user.username) use their username for helper function
-    return "user_detail"
-
-@movies.route("/account", methods=["GET", "POST"])
-def account():
-    return "account"
-
-
+    #reviews = Review.objects(commenter=user)
+    #return render_template("user_detail.html", user=user, img=img, reviews=reviews)
+    user = User.objects(username=username).first()
+    image = get_b64_img(username)
+    reviews = Review.objects(commenter=user)
+    return render_template("user_detail.html", user=user, img=image, reviews=reviews)
 

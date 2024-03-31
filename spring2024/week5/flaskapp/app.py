@@ -5,6 +5,7 @@ from . import app, bcrypt
 from .forms import CreatePostForm, LoginForm, RegistrationForm
 from .models import Post, User
 
+
 @app.route('/')
 @app.route('/index')
 def index_route():

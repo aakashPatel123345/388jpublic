@@ -67,6 +67,8 @@ def login_route():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+            # Why is this not working? Causing a ServerSelectionTimeoutError
+            # if user is not None and user.password == form.password.data:
             user = User.objects(username=form.username.data).first()
 
             if user is not None and bcrypt.check_password_hash(user.password, form.password.data):

@@ -6,7 +6,7 @@ from flask_login import (
     current_user,
     login_user,
     logout_user,
-    login_required,
+    login_required
 )
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
@@ -34,7 +34,7 @@ movie_client = MovieClient(OMDB_API_KEY)
 from .users.routes import users
 from .movies.routes import movies
 
-def custom_404(e):
+def custom_404(errror):
     return render_template("404.html"), 404
 
 
@@ -54,5 +54,4 @@ def create_app(test_config=None):
     app.register_error_handler(404, custom_404)
 
     login_manager.login_view = "users.login"
-
-    return app
+    return app 
