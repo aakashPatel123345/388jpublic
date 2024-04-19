@@ -51,6 +51,11 @@ Use your best judgment here but reach out to course instructors if you’re unsu
 ```
 Description of your final project idea:
 
+This project will revolve around reviewing, rating, and selecting favorite songs. Users can log in and log out, and logged-in users will be able to access personalized features. 
+
+Users can search for songs based on name, and will be presented with a list of results using a API like Spotify. Logged in users will get the ability to select favorites (add them to a list of favorites)
+and leave reviews / ratings for future users. When users select a song, that can see all the information of the song including the name, album, artists, features, and album picture. Users will also be able to see each review that was left. 
+
 ```
 
 
@@ -69,6 +74,12 @@ Note that some of these requirements overlap with each other so some features ma
 ```
 Describe what functionality will only be available to logged-in users:
 
+Logged in users will get the chance to do the following
+ --> Leave reviews for the songs that they have listened to.
+ --> Save songs as "favorites", and be able to view their favorite songs 
+ --> View an account page where they can see their user information including their favorites
+ --> Update their account information (update username, update email)
+
 ```
 
 
@@ -82,6 +93,25 @@ Describe what functionality will only be available to logged-in users:
 
 ```
 List and describe at least 4 forms:
+
+Form 1:
+--> Registration Form 
+  allows users to insert an email, username, and password. Usernames and emails that are already taken will show a warning message. Ex. "username is already taken".
+
+--> Login Form 
+  will asks users for a username and password. If correct, they will be brought to an account page specific to the user.
+
+
+--> Review Form
+  Each review will have a title and a body. The form will ask for these two bits of information and will
+  present a submit button for users to send that review 
+
+
+--> Profile Update form
+  Will allow logged-in users to update their profile information such as username and email address.
+
+
+--> May implement some more forms, but cannot think of anything else at the moment...
 
 ```
 
@@ -97,6 +127,23 @@ List and describe at least 4 forms:
 ```
 List and describe your routes/blueprints (don't need to list all routes/blueprints you may have–just enough for the requirement):
 
+Blueprint 1
+ - Profile / User blueprint. 
+  --> This blueprint will group together the user managment views on the website. For example
+      some routes for this blueprint may include "register", "account", "update_account", "login".
+
+      @users.route("/update_account", methods=...)
+      @users.route("/account/<user-id>", methods=...)
+      @users.route("/favorites", method=...)
+
+
+- Songs blueprint
+  --> This bluepring will group together the song management views on the website. For example some routes
+      for this bluepring may include 
+
+      @song.route("/song_information", methods=...)
+      @song.route("/reviews", methods=...)
+
 ```
 
 
@@ -109,6 +156,10 @@ List and describe your routes/blueprints (don't need to list all routes/blueprin
 
 ```
 Describe what will be stored/retrieved from MongoDB:
+
+In my MongoDB I will be storing the following: 
+  --> User information such as username, email, passwords (hashed), favorite songs list
+  --> Reviews (title, body, user_id, song_id)
 
 ```
 
@@ -139,6 +190,8 @@ Examples (feel free to use these or come up with your own):
 
 ```
 Describe what Python package or API you will use and how it will affect the user experience:
+
+I will use the Spotify API to get songs and information about each song. I will be displaying the songs by name, but may give functionality to allow users to search by artist and/or album name as well. 
 
 ```
 
