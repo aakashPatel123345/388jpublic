@@ -1,0 +1,61 @@
+{% extends "header_nav_bar.html" %}
+{% block content %}
+
+{% if error_msg %}
+  <div class="error-msg">
+    {{ error_msg }}
+  </div>
+{% endif %}
+
+{% if song %}
+<div class="song-card">
+  <div class="song-info">
+    <img class="song-image" alt="Cover image for {{ song.song_name }}" src="{{ song.image_url }}" />
+    <div class="song-details">
+      <h3 class="song-title"> {{ song.song_name }} </h3>
+      <ul>
+        <li><b>Artists:</b> {{ song.artists }}</li>
+        <li><b>Album Name:</b> {{ song.album_name }}</li>
+        <li><b>Release Date:</b> {{ song.release_date }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reviews">
+    <h2 class="reviews-title">Reviews <small class="reviews-count">({{ reviews | length }})</small></h2>
+    <ul class="review-list">
+      {% for review in reviews %}
+        <li class="review-item">
+          <div class="review-content">
+            <span class="review-date">{{ review.date }}</span>
+            <a class="review-author" href="{{ url_for('songs.user_detail', username=review.commenter.username) }}">
+              @{{ review.commenter.username }}
+            </a>
+            <p>{{ review.content }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if current_user.is_authenticated %}
+    <div class="review-form-container">
+      <form method="POST" action="" class="review-form">
+        {{ form.csrf_token }}
+        <div class="form-group">
+          {{ form.content.label }} {{ form.content(class="form-input") }}
+          {% if form.content.errors %}
+            <div class="error" role="alert">
+              {% for error in form.content.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        {{ form.submit(class="review-submit-button") }}
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% endblock content %}

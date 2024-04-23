@@ -1,0 +1,23 @@
+{% extends "header_nav_bar.html" %}
+{% block content %}
+{% if error %}
+    <div class="alert-error">
+        {{ error }}
+    </div>
+{% endif %}
+
+<div class="user-profile">
+    <h1 class="username-title">{{ user.username }}</h1>
+</div>
+
+<div class="user-reviews">
+    <h2 class="reviews-header">Reviews</h2>
+    {% for review in reviews %}
+        <div class="review-card">
+            <h3 class="review-song-title">{{ review.song_title }}</h3>
+            <p class="review-content">{{ review.content }}</p>
+            <p class="review-date">{{ review.date }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
