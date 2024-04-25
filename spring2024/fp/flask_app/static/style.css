@@ -470,3 +470,37 @@ body {
     color: #888;
     margin-top: 10px;
 }
+
+/* Styling for the favorites section */
+.user-favorites {
+    padding: 20px;
+    margin: 20px;
+    background-color: #ffffff; /* Light background for differentiation */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.10); /* Slightly lighter shadow for a softer look */
+}
+
+.favorites-header {
+    font-size: 24px;
+    color: #2c3e50; /* A slightly different shade of dark blue for a fresh feel */
+    margin-bottom: 15px;
+}
+
+.favorite-card {
+    background-color: #e8f0fe; /* Light blue background for visual interest */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 5px solid #007BFF; /* Blue accent line for branding consistency */
+    border-radius: 5px;
+}
+
+.favorite-song-title {
+    font-size: 20px;
+    color: #333;
+}
+
+.favorite-artist {
+    font-size: 16px;
+    color: #666;
+}
+

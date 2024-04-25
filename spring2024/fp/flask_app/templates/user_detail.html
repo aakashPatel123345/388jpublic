@@ -20,4 +20,15 @@
         </div>
     {% endfor %}
 </div>
+
+<div class="user-favorites">
+    <h2 class="favorites-header">Favorites</h2>
+    {% for favorite in favorites %}
+        <div class="favorite-card">
+            <h3 class="favorite-song-title">{{ favorite.name }}</h3>
+            <p class="favorite-artist">{{ favorite.artists }}</p>
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

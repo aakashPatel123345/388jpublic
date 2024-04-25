@@ -43,3 +43,6 @@ class LoginForm(FlaskForm):
 class SongReviewForm(FlaskForm):
     content = TextAreaField("Comment", validators=[InputRequired(), Length(min=1, max=1000)])
     submit = SubmitField("Post Review")
+
+class AddToFavoritesForm(FlaskForm):
+    submit = SubmitField("Add to Favorites")

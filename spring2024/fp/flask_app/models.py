@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from . import db, login_manager
+from . import spotify_client
 from datetime import datetime
 
 
@@ -8,8 +9,19 @@ class User(db.Document, UserMixin):
     email = db.StringField(max_length=100, required=True, unique=True)
     password = db.StringField(max_length=100, required=True)
 
+    # All users also have a "favorites" playlist filled with song IDs
+    favorites = db.ListField(db.StringField())
+
+
     def get_id(self):
         return self.username
+    
+    def getSongObjects(self):
+        songs = []
+        for song_id in self.favorites:
+            song = spotify_client.get_song(song_id)
+            songs.append(song)
+        return songs
     
 
 

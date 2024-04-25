@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
 
 from .. import spotify_client
-from .. forms import SearchForm, SongReviewForm
+from .. forms import SearchForm, SongReviewForm, AddToFavoritesForm
 from ..models import User, Review
 from ..utils import current_time
 
@@ -42,23 +42,29 @@ def song_detail(song_id):
     except ValueError as e:
         return render_template("song_detail.html", error_msg=str(e))
     
-    form = SongReviewForm()
-    if form.validate_on_submit():
-        review = Review(
+    reviewForm = SongReviewForm()
+    if reviewForm.validate_on_submit():
+        reviewForm = Review(
             commenter=current_user,
-            content=form.content.data,
+            content=reviewForm.content.data,
             date=current_time(),
             song_id=song_id,
             song_title=song.name
         )
-        review.save()
+        reviewForm.save()
         flash("Review posted successfully.", "success")
+        return redirect(request.path)
+
+    saveToFavoriteForm = AddToFavoritesForm()
+    if saveToFavoriteForm.validate_on_submit():
+        current_user.favorites.append(song_id)
+        current_user.save()
+        flash("Song added to favorites.", "success")
         return redirect(request.path)
     
     reviews = Review.objects(song_id=song_id)
 
-    return render_template("song_detail.html", song=song, form=form, reviews=reviews)
-
+    return render_template("song_detail.html", song=song, reviewForm=reviewForm, saveToFavoritesForm = saveToFavoriteForm, reviews=reviews)
 @songs.route("/user/<username>")
 def user_detail(username):
     #user = find first match in db
@@ -67,4 +73,5 @@ def user_detail(username):
     #return render_template("user_detail.html", user=user, img=img, reviews=reviews)
     user = User.objects(username=username).first()
     reviews = Review.objects(commenter=user)
-    return render_template("user_detail.html", user=user, reviews=reviews)
+    songs = user.getSongObjects()
+    return render_template("user_detail.html", user=user, reviews=reviews, favorites=songs)
