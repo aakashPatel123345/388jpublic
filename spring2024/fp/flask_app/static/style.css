@@ -504,3 +504,9 @@ body {
     color: #666;
 }
 
+.favorite-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    margin-right: 20px;
+}

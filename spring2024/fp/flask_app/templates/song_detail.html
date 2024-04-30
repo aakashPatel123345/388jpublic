@@ -17,6 +17,8 @@
         <li><b>Artists:</b> {{ song.artists }}</li>
         <li><b>Album Name:</b> {{ song.album_name }}</li>
         <li><b>Release Date:</b> {{ song.release_date }}</li>
+        {# Here we will include the 30 second preview of the song #}
+        <li><b>Preview:</b> <audio controls><source src="{{ song.preview_url }}" type="audio/mpeg"></audio></li>
       </ul>
     </div>
   </div>
@@ -29,7 +31,7 @@
           <div class="review-content">
             <span class="review-date">{{ review.date }}</span>
             <a class="review-author" href="{{ url_for('songs.user_detail', username=review.commenter.username) }}">
-              @{{ review.commenter.username }}
+              {{ review.commenter.username }}
             </a>
             <p>{{ review.content }}</p>
           </div>

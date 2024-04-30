@@ -8,8 +8,6 @@ from .. forms import SearchForm, SongReviewForm, AddToFavoritesForm
 from ..models import User, Review
 from ..utils import current_time
 
-import json
-
 
 songs = Blueprint("songs", __name__)
 
@@ -57,7 +55,7 @@ def song_detail(song_id):
 
     saveToFavoriteForm = AddToFavoritesForm()
     if saveToFavoriteForm.validate_on_submit():
-        current_user.favorites.append(song_id)
+        current_user.favorites.append(song.id)
         current_user.save()
         flash("Song added to favorites.", "success")
         return redirect(request.path)
@@ -65,13 +63,12 @@ def song_detail(song_id):
     reviews = Review.objects(song_id=song_id)
 
     return render_template("song_detail.html", song=song, reviewForm=reviewForm, saveToFavoritesForm = saveToFavoriteForm, reviews=reviews)
+
+
+
 @songs.route("/user/<username>")
 def user_detail(username):
-    #user = find first match in db
-    #img = get_b64_img(user.username) use their username for helper function
-    #reviews = Review.objects(commenter=user)
-    #return render_template("user_detail.html", user=user, img=img, reviews=reviews)
     user = User.objects(username=username).first()
     reviews = Review.objects(commenter=user)
-    songs = user.getSongObjects()
-    return render_template("user_detail.html", user=user, reviews=reviews, favorites=songs)
+    favoriteSongs = user.getSongObjects()
+    return render_template("user_detail.html", user=user, reviews=reviews, favorites=favoriteSongs)

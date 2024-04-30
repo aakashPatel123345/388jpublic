@@ -51,10 +51,7 @@ Use your best judgment here but reach out to course instructors if you’re unsu
 ```
 Description of your final project idea:
 
-This project will revolve around reviewing, rating, and selecting favorite songs. Users can log in and log out, and logged-in users will be able to access personalized features. 
-
-Users can search for songs based on name, and will be presented with a list of results using a API like Spotify. Logged in users will get the ability to select favorites (add them to a list of favorites)
-and leave reviews / ratings for future users. When users select a song, that can see all the information of the song including the name, album, artists, features, and album picture. Users will also be able to see each review that was left. 
+This is a music searcher, reviewer, and playlist creation app. Using the Spotify Web API, users can search for any song or artist. They are then presented with the top 16 results. Users can click each track to get more information on the song. Users can leave reviews, add a song to their favorites playlist, and view reviews left by other users. 
 
 ```
 
@@ -74,11 +71,11 @@ Note that some of these requirements overlap with each other so some features ma
 ```
 Describe what functionality will only be available to logged-in users:
 
-Logged in users will get the chance to do the following
- --> Leave reviews for the songs that they have listened to.
- --> Save songs as "favorites", and be able to view their favorite songs 
- --> View an account page where they can see their user information including their favorites
- --> Update their account information (update username, update email)
+Logged-in users get the following functionalities that non-users do not get
+  --> Leaving reviews for songs
+  --> Adding songs / tracks to a favorites playlist that is specific to their account
+  --> View an account information where they can see their user information including their favorites
+
 
 ```
 
@@ -95,24 +92,19 @@ Logged in users will get the chance to do the following
 List and describe at least 4 forms:
 
 Form 1:
---> Registration Form 
-  allows users to insert an email, username, and password. Usernames and emails that are already taken will show a warning message. Ex. "username is already taken".
 
---> Login Form 
-  will asks users for a username and password. If correct, they will be brought to an account page specific to the user.
+  --> Login Form
+      This form asks users for a username and password, and if correct are successfully logged in to the website
 
+  --> Registration Form
+      This registration form asks users for a username, email, password, and a passform confirmation field. Usernames or emails that are already taken 
 
---> Review Form
-  Each review will have a title and a body. The form will ask for these two bits of information and will
-  present a submit button for users to send that review 
-
-
---> Profile Update form
-  Will allow logged-in users to update their profile information such as username and email address.
+  --> Review Form
+      This form allows users to provide a review (in the form of a TextField)
 
 
---> May implement some more forms, but cannot think of anything else at the moment...
-
+  --> Search Form
+      This form allows users to search for whatever artist or track they want. 
 ```
 
 
@@ -127,22 +119,23 @@ Form 1:
 ```
 List and describe your routes/blueprints (don't need to list all routes/blueprints you may have–just enough for the requirement):
 
-Blueprint 1
- - Profile / User blueprint. 
-  --> This blueprint will group together the user managment views on the website. For example
-      some routes for this blueprint may include "register", "account", "update_account", "login".
+--> Song Blueprint
+      This blueprint is for songs
+      Here are all the routes for this blueprint
 
-      @users.route("/update_account", methods=...)
-      @users.route("/account/<user-id>", methods=...)
-      @users.route("/favorites", method=...)
+            “/” ⇒ the home page
+            “/search_results/<query> ⇒ the route that leads users to their search results (based on what they searched)
+            “/song/<song_id>” ⇒ the route that leads user to a specific song after they click on a result.
+            “/user/<username>” ⇒ the route that leads users to a specific user’s profile. 
 
 
-- Songs blueprint
-  --> This bluepring will group together the song management views on the website. For example some routes
-      for this bluepring may include 
-
-      @song.route("/song_information", methods=...)
-      @song.route("/reviews", methods=...)
+--> User Blueprint
+      This blueprint is for users
+      Here are all the routes for this blueprint
+            “/register” ⇒ the route that lets users complete the registration form
+            “/login” ⇒ the route that lets users complete the login form. Users are redirected to this route after registration
+            “/logout” ⇒ log the current user out
+            “/account_details” ⇒ displays the account details for the user
 
 ```
 
@@ -155,12 +148,12 @@ Blueprint 1
 * Must use MongoDB
 
 ```
-Describe what will be stored/retrieved from MongoDB:
+In MongoDB I will store the following
 
-In my MongoDB I will be storing the following: 
-  --> User information such as username, email, passwords (hashed), favorite songs list
-  --> Reviews (title, body, user_id, song_id)
-
+--> User Information
+      User information necessary for logging in. I will store each user’s username, email, and hashed password. In addition I will also store an array representing the user’s favorites playlist
+--> Reviews
+      Each review will be stored with the following information: review content, date, username (which user submitted the review)
 ```
 
 
@@ -191,7 +184,8 @@ Examples (feel free to use these or come up with your own):
 ```
 Describe what Python package or API you will use and how it will affect the user experience:
 
-I will use the Spotify API to get songs and information about each song. I will be displaying the songs by name, but may give functionality to allow users to search by artist and/or album name as well. 
+I have used the Spotify Web API
+Every time the website is loaded, I request an access token to be used in the search process. The request token is then loaded (hourly limit which can be reset by refreshing the page) and is then used in the track / track information retrieval process. 
 
 ```
 

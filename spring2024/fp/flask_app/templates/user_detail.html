@@ -25,8 +25,11 @@
     <h2 class="favorites-header">Favorites</h2>
     {% for favorite in favorites %}
         <div class="favorite-card">
+            <a href="{{ url_for('songs.song_detail', song_id=favorite.id) }}">
+                <img class="favorite-image" alt="Cover image for {{ favorite.name }}" src="{{ favorite.image_url }}" />
             <h3 class="favorite-song-title">{{ favorite.name }}</h3>
             <p class="favorite-artist">{{ favorite.artists }}</p>
+            </a>
         </div>
     {% endfor %}
 </div>

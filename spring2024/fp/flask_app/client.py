@@ -13,6 +13,7 @@ class Song(object):
         self.popularity = omdb_json['popularity']
         self.image_url = omdb_json['image_url']
         self.id = omdb_json['id']
+        self.preview_url = omdb_json['preview_url']
 
 
     def __repr__(self):
@@ -80,6 +81,7 @@ class SpotifyClient:
                     track_info['popularity'] = track['popularity']
                     track_info['image_url'] = track['album']['images'][0]['url']
                     track_info['id'] = track['id']
+                    track_info['preview_url'] = track['preview_url']
                     tracks.append(track_info)
             return tracks
         else:
@@ -105,20 +107,11 @@ class SpotifyClient:
                 'duration': data['duration_ms'],
                 'popularity': data['popularity'],
                 'image_url': data['album']['images'][0]['url'],
-                'id': data['id']
+                'id': data['id'],
                 # Add preview after testing
+                'preview_url': data['preview_url']
             }
             song = Song(song_info)
             return song
         else:
             raise ValueError(f"Failed to retrieve song, status code: {response.status_code}")
-
-
-
-
-        
-    
-
-
-
-        
